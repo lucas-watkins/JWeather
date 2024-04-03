@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+group = 'com.github.lucas-w'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.json:json:20240303'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'CurrentWeather.weather'
+}
