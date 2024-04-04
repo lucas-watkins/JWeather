@@ -71,10 +71,7 @@ public class weather {
     }
 
     public static void main(String[] args) throws IOException {
-        weather w = new weather();
-        System.out.println(w.getTemperature(0));
-        System.out.println(w.inOfRain(0));
-        System.out.println(w.getTime());
+        new gui();
     }
 
     public void reloadWeather() throws IOException{
