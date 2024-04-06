@@ -23,3 +23,11 @@ test {
 application {
     mainClass = 'CurrentWeather.weather'
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources"
+        }
+    }
+}

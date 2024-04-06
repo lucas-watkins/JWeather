@@ -23,8 +23,9 @@ public class weather {
 
     static {
         try {
-            uri = new URI("https://api.open-meteo.com/v1/forecast?latitude=38.773918&" +
-                    "longitude=-76.068527&hourly=temperature_2m,rain,snowfall");
+            // put lat and long here later
+            uri = new URI("https://api.open-meteo.com/v1/forecast?latitude=&" +
+                    "longitude=&hourly=temperature_2m,rain,snowfall");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
