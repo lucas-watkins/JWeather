@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# location
+loc.txt
+
 # Log file
 *.log
 

@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-// WARNING: UNTESTED CODE
-
 public class locparser{
     public locparser() throws IOException {
         if (!new File("loc.txt").exists()){

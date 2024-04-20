@@ -1,5 +1,6 @@
 package CurrentWeather;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -23,10 +24,13 @@ public class weather {
 
     static {
         try {
+            // parse loc file
+            String[] locations = new CurrentWeather.locparser().getLocation();
+
             // put lat and long here later
-            uri = new URI("https://api.open-meteo.com/v1/forecast?latitude=&" +
-                    "longitude=&hourly=temperature_2m,rain,snowfall");
-        } catch (URISyntaxException e) {
+            uri = new URI("https://api.open-meteo.com/v1/forecast?latitude=" + locations[0] +
+                    "&longitude=" + locations[1] + "&hourly=temperature_2m,rain,snowfall");
+        } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -64,11 +68,11 @@ public class weather {
 
     }
 
-    public int inOfRain(int hoursFromNow) throws IOException{
+    public double inOfRain(int hoursFromNow) throws IOException{
         reloadWeather();
         JSONArray now = (JSONArray) hourlyForecast.get("rain");
         BigDecimal mmOfRain = (BigDecimal) now.get(getHoursFromMidnight() + hoursFromNow);
-        return (int) (mmOfRain.doubleValue() / 25.4d);
+        return (mmOfRain.doubleValue() / 25.4d);
     }
 
     public static void main(String[] args) throws IOException {

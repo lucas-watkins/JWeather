@@ -23,7 +23,7 @@ test {
 application {
     mainClass = 'CurrentWeather.weather'
 }
-
+tasks.withType(Copy).all { duplicatesStrategy 'exclude' }
 sourceSets {
     main {
         resources {

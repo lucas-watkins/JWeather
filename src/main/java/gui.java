@@ -27,6 +27,7 @@ public class gui implements ActionListener {
 
     private Class clazz = this.getClass();
     private ImageIcon sunny = scaleImage(64,64, clazz.getResource("/sunny.jpg"));
+    private ImageIcon rainy = scaleImage(64,64, clazz.getResource("/rainy.jpg"));
 
     public gui() throws IOException{
         try {
@@ -85,13 +86,20 @@ public class gui implements ActionListener {
 
     private void updateWeather() {
         try {
-            weatherPicture.setIcon(sunny);
+            weatherPicture.setIcon(getImage());
             temp.setText("Temperature: " + weather.getTemperature(0) + " °F\n");
             rain.setText("Rain: " + weather.inOfRain(0) + " in\n");
         } catch (IOException ex){
             JOptionPane.showMessageDialog(null, "Can't Fetch Weather",
                     "JWeather", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private ImageIcon getImage() throws IOException{
+        if (weather.inOfRain(0) > 0){
+            return rainy;
+        }
+        else {return sunny;}
     }
 
     private ImageIcon scaleImage(int x, int y, URL img){
