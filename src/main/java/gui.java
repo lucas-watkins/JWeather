@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -13,21 +14,18 @@ import CurrentWeather.weather;
 public class gui implements ActionListener {
 
     private weather weather;
-    private JButton updateButton = new JButton("Update");
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu file = new JMenu("File");
-    private JMenuItem about = new JMenuItem("About");
-    private JFrame frame = new JFrame();
-    private Box lefthandBox = Box.createVerticalBox();
-    private JLabel weatherPicture = new JLabel();
+    private final JButton updateButton = new JButton("Update");
+    private final JMenuItem about = new JMenuItem("About");
+    private final JMenuItem location = new JMenuItem("Location");
 
-    private Box wInfoBox = Box.createVerticalBox();
-    private JLabel temp = new JLabel();
-    private JLabel rain = new JLabel();
+    private final JLabel weatherPicture = new JLabel();
 
-    private Class clazz = this.getClass();
-    private ImageIcon sunny = scaleImage(64,64, clazz.getResource("/sunny.jpg"));
-    private ImageIcon rainy = scaleImage(64,64, clazz.getResource("/rainy.jpg"));
+    private final JLabel temp = new JLabel();
+    private final JLabel rain = new JLabel();
+
+    private final Class clazz = this.getClass();
+    private final ImageIcon sunny = scaleImage(64,64, clazz.getResource("/sunny.jpg"));
+    private final ImageIcon rainy = scaleImage(64,64, clazz.getResource("/rainy.jpg"));
 
     public gui() throws IOException{
         try {
@@ -39,21 +37,28 @@ public class gui implements ActionListener {
             System.exit(0);
         }
 
+        JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         frame.setTitle("JWeather");
 
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
         menuBar.add(file);
         file.add(about);
+        file.add(location);
         about.addActionListener(this);
+        location.addActionListener(this);
         frame.setJMenuBar(menuBar);
 
         updateButton.setAlignmentX(0.15f);
+        Box lefthandBox = Box.createVerticalBox();
         lefthandBox.add(weatherPicture);
         lefthandBox.add(Box.createVerticalStrut(10));
         lefthandBox.add(updateButton, BorderLayout.WEST);
         frame.add(lefthandBox);
 
+        Box wInfoBox = Box.createVerticalBox();
         wInfoBox.add(temp);
         wInfoBox.add(rain);
         frame.add(wInfoBox);
@@ -67,6 +72,13 @@ public class gui implements ActionListener {
         if (e.getSource().equals(updateButton)){
             // update code in here
             updateWeather();
+        }
+        if (e.getSource().equals(location)){
+            try {
+                displayLocationBanner();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         if (e.getSource().equals(about)){
             // show about screen
@@ -82,6 +94,11 @@ public class gui implements ActionListener {
                 }
             }
         }
+    }
+
+    private void displayLocationBanner() throws FileNotFoundException {
+        JOptionPane.showMessageDialog(null, CurrentWeather.locparser.getLocationAsString(),
+                "JWeather" , JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void updateWeather() {
