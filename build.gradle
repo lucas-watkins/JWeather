@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'application'
 }
-group = 'com.github.lucas-w'
+group = 'com.github.lucasw'
 version = '1.0-SNAPSHOT'
 
 repositories {

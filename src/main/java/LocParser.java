@@ -1,21 +1,25 @@
 package CurrentWeather;
 
-import org.apache.http.client.methods.HttpGet;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Scanner;
 
-public class locparser{
-    public locparser() throws IOException {
+public class LocParser {
+    static{
         if (!new File("loc.txt").exists()){
-            new File("loc.txt").createNewFile();
+            try {
+                if (!new File("loc.txt").createNewFile()){
+                    throw new FileNotFoundException("Could not create file");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    public String[] getLocation() throws FileNotFoundException {
+    public static String[] getLocation() throws FileNotFoundException {
         File file = new File("loc.txt");
         Scanner scanner = new Scanner(file);
         return new String[] {scanner.nextLine(), scanner.nextLine()};
@@ -25,6 +29,9 @@ public class locparser{
         File file = new File("loc.txt");
         Scanner scanner = new Scanner(file);
 
-        return "Latitude: " + scanner.nextDouble() + "\nLongitude: " + scanner.nextDouble();
+        return "Latitude: " + scanner.nextDouble() + "\nLongitude: " + scanner.nextDouble() + "\nLocation: "
+                + scanner.nextLine();
     }
+
+    
 }

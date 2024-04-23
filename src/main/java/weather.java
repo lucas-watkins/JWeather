@@ -1,6 +1,5 @@
 package CurrentWeather;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -14,7 +13,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.time.Instant;
-import CurrentWeather.gui;
 
 
 public class weather {
@@ -25,7 +23,7 @@ public class weather {
     static {
         try {
             // parse loc file
-            String[] locations = new CurrentWeather.locparser().getLocation();
+            String[] locations = new CurrentWeather.LocParser().getLocation();
 
             // put lat and long here later
             uri = new URI("https://api.open-meteo.com/v1/forecast?latitude=" + locations[0] +
@@ -76,7 +74,7 @@ public class weather {
     }
 
     public static void main(String[] args) throws IOException {
-        new gui();
+        new CurrentWeather.gui();
     }
 
     public void reloadWeather() throws IOException{

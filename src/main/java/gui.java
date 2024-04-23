@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
 import CurrentWeather.weather;
+import CurrentWeather.GetLocationWindow;
 
 public class gui implements ActionListener {
 
@@ -17,11 +18,13 @@ public class gui implements ActionListener {
     private final JButton updateButton = new JButton("Update");
     private final JMenuItem about = new JMenuItem("About");
     private final JMenuItem location = new JMenuItem("Location");
+    private final JMenuItem setLocation = new JMenuItem("Set Location");
 
     private final JLabel weatherPicture = new JLabel();
 
     private final JLabel temp = new JLabel();
     private final JLabel rain = new JLabel();
+    private final JFrame frame = new JFrame();
 
     private final Class clazz = this.getClass();
     private final ImageIcon sunny = scaleImage(64,64, clazz.getResource("/sunny.jpg"));
@@ -29,6 +32,18 @@ public class gui implements ActionListener {
 
     public gui() throws IOException{
         try {
+
+            new Thread(() -> {
+                boolean loadingWindowCreated = false;
+                JOptionPane pane = new JOptionPane();
+                while (!frame.isVisible()) {
+                    if (!loadingWindowCreated){
+                        pane.showMessageDialog(frame, "Fetching Weather...",
+                                "JWeather", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }).start();
+
             weather = new weather();
         } catch(UnknownHostException ex){
             JOptionPane.showMessageDialog(null,
@@ -37,7 +52,7 @@ public class gui implements ActionListener {
             System.exit(0);
         }
 
-        JFrame frame = new JFrame();
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         frame.setTitle("JWeather");
@@ -47,8 +62,10 @@ public class gui implements ActionListener {
         menuBar.add(file);
         file.add(about);
         file.add(location);
+        file.add(setLocation);
         about.addActionListener(this);
         location.addActionListener(this);
+        setLocation.addActionListener(this);
         frame.setJMenuBar(menuBar);
 
         updateButton.setAlignmentX(0.15f);
@@ -94,10 +111,13 @@ public class gui implements ActionListener {
                 }
             }
         }
+        if (e.getSource().equals(setLocation)){
+            new GetLocationWindow();
+        }
     }
 
     private void displayLocationBanner() throws FileNotFoundException {
-        JOptionPane.showMessageDialog(null, CurrentWeather.locparser.getLocationAsString(),
+        JOptionPane.showMessageDialog(null, CurrentWeather.LocParser.getLocationAsString(),
                 "JWeather" , JOptionPane.INFORMATION_MESSAGE);
     }
 
