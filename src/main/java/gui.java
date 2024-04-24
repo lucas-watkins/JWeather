@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import CurrentWeather.weather;
 import CurrentWeather.GetLocationWindow;
+import CurrentWeather.LoadingWindow;
 
 public class gui implements ActionListener {
 
@@ -29,6 +30,7 @@ public class gui implements ActionListener {
     private final Class clazz = this.getClass();
     private final ImageIcon sunny = scaleImage(64,64, clazz.getResource("/sunny.jpg"));
     private final ImageIcon rainy = scaleImage(64,64, clazz.getResource("/rainy.jpg"));
+    private LoadingWindow loadingWindow;
 
     public gui() throws IOException{
         try {
@@ -38,10 +40,11 @@ public class gui implements ActionListener {
                 JOptionPane pane = new JOptionPane();
                 while (!frame.isVisible()) {
                     if (!loadingWindowCreated){
-                        pane.showMessageDialog(frame, "Fetching Weather...",
-                                "JWeather", JOptionPane.INFORMATION_MESSAGE);
+                        loadingWindowCreated = true;
+                        loadingWindow = new LoadingWindow();
                     }
                 }
+                loadingWindow.dispose();
             }).start();
 
             weather = new weather();
