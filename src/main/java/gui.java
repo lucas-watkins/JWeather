@@ -37,14 +37,22 @@ public class gui implements ActionListener {
 
             new Thread(() -> {
                 boolean loadingWindowCreated = false;
-                JOptionPane pane = new JOptionPane();
-                while (!frame.isVisible()) {
+                while(weather == null){
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     if (!loadingWindowCreated){
                         loadingWindowCreated = true;
                         loadingWindow = new LoadingWindow();
+                        loadingWindow.run();
+
                     }
+
                 }
                 loadingWindow.dispose();
+
             }).start();
 
             weather = new weather();

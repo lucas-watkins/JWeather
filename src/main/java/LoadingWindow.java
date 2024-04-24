@@ -2,11 +2,11 @@ package CurrentWeather;
 import javax.swing.*;
 import java.awt.*;
 
-public class LoadingWindow
+public class LoadingWindow implements Runnable
 {
     private JFrame frame;
 
-    public LoadingWindow() {
+    public void run() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setTitle("JWeather");
