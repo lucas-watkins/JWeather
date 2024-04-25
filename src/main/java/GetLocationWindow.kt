@@ -17,7 +17,7 @@ class GetLocationWindow : ActionListener
     private val box = Box.createVerticalBox()
 
     init {
-        frame.setLayout(FlowLayout(FlowLayout.CENTER, 5, 5));
+        frame.layout = FlowLayout(FlowLayout.CENTER, 5, 5)
         box.add(JLabel("Latitude: "));
         box.add(latEntry);
         box.add(JLabel("Longitude: "));
@@ -27,23 +27,23 @@ class GetLocationWindow : ActionListener
         box.add(okButton);
 
         frame.add(box);
-        okButton.addActionListener(this);
-        frame.setSize(250,250);
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
+        okButton.addActionListener(this)
+        frame.setSize(250,250)
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
+        frame.isVisible = true
     }
 
     override fun actionPerformed(e: ActionEvent){
-        val lat = latEntry.getText();
-        val lng = lngEntry.getText();
-        val loc = locEntry.getText();
+        val lat = latEntry.getText()
+        val lng = lngEntry.getText()
+        val loc = locEntry.getText()
 
         try {
-            val fileWriter = FileWriter("loc.txt");
-            fileWriter.write(lat + '\n' + lng + '\n' + loc + '\n');
-            fileWriter.close();
+            val fileWriter = FileWriter("loc.txt")
+            fileWriter.write(lat + '\n' + lng + '\n' + loc + '\n')
+            fileWriter.close()
         } catch (i: IOException) {
-            throw RuntimeException("Error writing to loc.txt");
+            throw RuntimeException("Error writing to loc.txt")
         }
         frame.dispose();
     }

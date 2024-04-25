@@ -134,6 +134,7 @@ public class gui implements ActionListener {
 
     private void updateWeather() {
         try {
+            weather = new weather();
             weatherPicture.setIcon(getImage());
             temp.setText("Temperature: " + weather.getTemperature(0) + " °F\n");
             rain.setText("Rain: " + weather.inOfRain(0) + " in\n");

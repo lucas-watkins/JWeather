@@ -2,6 +2,7 @@ package CurrentWeather
 
 import java.io.File
 import java.io.FileNotFoundException
+import java.io.FileReader
 import java.io.IOException
 import java.util.*
 
@@ -33,16 +34,21 @@ class LocParser {
             fun locationAsString(): String {
                 try {
                     val file = File("loc.txt")
-                    val scanner = Scanner(file)
-
+                    val stream = FileReader(file)
+                    val list = stream.readLines()
                     return """
-        Latitude: ${scanner.nextDouble()}
-        Longitude: ${scanner.nextDouble()}
-        Location: ${scanner.nextLine()}
+        Latitude: ${list[0]}
+        Longitude: ${list[1]}
+        Location: ${list[2]}
         """.trimIndent()
                 }
-                catch (e: NoSuchElementException) {
-                    return "No Location Specified"
+                catch (e: Exception) {
+                    return when (e){
+                        is NoSuchElementException -> "No Location Specified"
+                        is FileNotFoundException -> "File not found"
+                        else -> throw e
+                    }
+
                 }
             }
         }
