@@ -128,7 +128,7 @@ public class gui implements ActionListener {
     }
 
     private void displayLocationBanner() throws FileNotFoundException {
-        JOptionPane.showMessageDialog(null, CurrentWeather.LocParser.getLocationAsString(),
+        JOptionPane.showMessageDialog(null, CurrentWeather.LocParser.locationAsString(),
                 "JWeather" , JOptionPane.INFORMATION_MESSAGE);
     }
 

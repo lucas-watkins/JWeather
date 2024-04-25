@@ -13,6 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.time.Instant;
+import CurrentWeather.LocParser;
 
 
 public class weather {
@@ -23,12 +24,12 @@ public class weather {
     static {
         try {
             // parse loc file
-            String[] locations = new CurrentWeather.LocParser().getLocation();
+            String[] locations = CurrentWeather.LocParser.location();
 
             // put lat and long here later
             uri = new URI("https://api.open-meteo.com/v1/forecast?latitude=" + locations[0] +
                     "&longitude=" + locations[1] + "&hourly=temperature_2m,rain,snowfall");
-        } catch (URISyntaxException | IOException e) {
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }

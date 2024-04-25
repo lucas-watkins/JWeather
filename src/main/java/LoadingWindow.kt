@@ -1,23 +1,24 @@
-package CurrentWeather;
-import javax.swing.*;
-import java.awt.*;
+package CurrentWeather
 
-public class LoadingWindow implements Runnable
-{
-    private JFrame frame;
+import java.awt.BorderLayout
+import javax.swing.JFrame
+import javax.swing.JLabel
 
-    public void run() {
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setTitle("JWeather");
-        frame.setSize(250, 250);
-        frame.add(new JLabel("Fetching Weather..."), BorderLayout.CENTER);
-        frame.setVisible(true);
+class LoadingWindow : Runnable {
+    private var frame: JFrame? = null
+
+     override fun run() {
+        frame = JFrame()
+        frame!!.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
+        frame!!.title = "JWeather"
+        frame!!.setSize(250, 250)
+        frame!!.add(JLabel("Fetching Weather..."), BorderLayout.CENTER)
+        frame!!.isVisible = true
     }
 
-    public void dispose(){
-        System.out.println("Disposing frame");
-        frame.dispose();
+    fun dispose() {
+        println("Disposing frame")
+        frame!!.dispose()
     }
 }
 

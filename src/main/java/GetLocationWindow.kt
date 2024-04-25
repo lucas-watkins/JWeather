@@ -7,22 +7,22 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class GetLocationWindow implements ActionListener
+class GetLocationWindow : ActionListener
 {
-    private final JFrame frame = new JFrame();
-    private final JTextField latEntry = new JTextField(7);
-    private final JTextField lngEntry = new JTextField(7);
-    private final JTextField locEntry = new JTextField(7);
-    private final JButton okButton = new JButton("OK");
+    private val frame = JFrame()
+    private val latEntry = JTextField(7)
+    private val lngEntry = JTextField(7)
+    private val locEntry = JTextField(7)
+    private val okButton = JButton("OK")
+    private val box = Box.createVerticalBox()
 
-    public GetLocationWindow(){
-        Box box = Box.createVerticalBox();
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        box.add(new JLabel("Latitude: "));
+    init {
+        frame.setLayout(FlowLayout(FlowLayout.CENTER, 5, 5));
+        box.add(JLabel("Latitude: "));
         box.add(latEntry);
-        box.add(new JLabel("Longitude: "));
+        box.add(JLabel("Longitude: "));
         box.add(lngEntry);
-        box.add(new JLabel("Location: "));
+        box.add(JLabel("Location: "));
         box.add(locEntry);
         box.add(okButton);
 
@@ -33,16 +33,17 @@ public class GetLocationWindow implements ActionListener
         frame.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e){
-        String lat = latEntry.getText();
-        String lng = lngEntry.getText();
-        String loc = locEntry.getText();
+    override fun actionPerformed(e: ActionEvent){
+        val lat = latEntry.getText();
+        val lng = lngEntry.getText();
+        val loc = locEntry.getText();
 
         try {
-            FileWriter fileWriter = new FileWriter("loc.txt");
+            val fileWriter = FileWriter("loc.txt");
             fileWriter.write(lat + '\n' + lng + '\n' + loc + '\n');
-        } catch (IOException i){
-            throw new RuntimeException("Error writing to loc.txt");
+            fileWriter.close();
+        } catch (i: IOException) {
+            throw RuntimeException("Error writing to loc.txt");
         }
         frame.dispose();
     }

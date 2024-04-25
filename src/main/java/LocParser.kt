@@ -1,42 +1,50 @@
-package CurrentWeather;
+package CurrentWeather
+
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.util.*
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
-public class LocParser {
-    static{
-        if (!new File("loc.txt").exists()){
+class LocParser {
+    init {
+        if (!File("loc.txt").exists()) {
             try {
-                if (!new File("loc.txt").createNewFile()){
-                    throw new FileNotFoundException("Could not create file");
+                if (!File("loc.txt").createNewFile()) {
+                    throw FileNotFoundException("Could not create file")
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (e: IOException) {
+                throw RuntimeException(e)
+            }
+        }
+    }
+        companion object {
+            @JvmStatic
+            fun location(): Array<String> {
+                try {
+                    val file = File("loc.txt")
+                    val scanner = Scanner(file)
+                    return arrayOf(scanner.nextLine(), scanner.nextLine())
+                } catch (e: NoSuchElementException) {
+                    return arrayOf("0", "0")
+                }
+            }
+            @JvmStatic
+            fun locationAsString(): String {
+                try {
+                    val file = File("loc.txt")
+                    val scanner = Scanner(file)
+
+                    return """
+        Latitude: ${scanner.nextDouble()}
+        Longitude: ${scanner.nextDouble()}
+        Location: ${scanner.nextLine()}
+        """.trimIndent()
+                }
+                catch (e: NoSuchElementException) {
+                    return "No Location Specified"
+                }
             }
         }
     }
 
-    public static String[] getLocation() throws FileNotFoundException {
-        try {
-            File file = new File("loc.txt");
-            Scanner scanner = new Scanner(file);
-            return new String[] {scanner.nextLine(), scanner.nextLine()};
-        } catch (NoSuchElementException e) {
-            return new String[]{"0", "0"};
-        }
-    }
-
-    public static String getLocationAsString() throws FileNotFoundException {
-        File file = new File("loc.txt");
-        Scanner scanner = new Scanner(file);
-
-        return "Latitude: " + scanner.nextDouble() + "\nLongitude: " + scanner.nextDouble() + "\nLocation: "
-                + scanner.nextLine();
-    }
-
-    
-}
